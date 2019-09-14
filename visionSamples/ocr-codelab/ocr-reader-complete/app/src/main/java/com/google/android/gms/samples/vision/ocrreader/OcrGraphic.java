@@ -19,6 +19,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 
 import com.google.android.gms.samples.vision.ocrreader.ui.camera.GraphicOverlay;
 import com.google.android.gms.vision.text.Text;
@@ -39,6 +40,7 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
     private static Paint rectPaint;
     private static Paint textPaint;
     private final TextBlock textBlock;
+    private static final String TAG = "MyActivity";
 
     OcrGraphic(GraphicOverlay overlay, TextBlock text) {
         super(overlay);
@@ -89,6 +91,15 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
         return rect.contains(x, y);
     }
 
+    public static boolean isNumeric(String strNum) {
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException | NullPointerException nfe) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Draws the text block annotations for position, size, and raw value on the supplied canvas.
      */
@@ -108,7 +119,14 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
         for(Text currentText : textComponents) {
             float left = translateX(currentText.getBoundingBox().left);
             float bottom = translateY(currentText.getBoundingBox().bottom);
-            canvas.drawText(currentText.getValue(), left, bottom, textPaint);
+            Log.i(TAG, "draw: " + isNumeric(currentText.getValue()));
+            if (isNumeric(currentText.getValue())){
+                Log.i(TAG, "Huyu: " + currentText.getValue());
+                canvas.drawText(currentText.getValue(), left, bottom, textPaint);
+            } else {
+                Log.i(TAG, "Not Huyu: " + currentText.getValue());
+            }
+
         }
     }
 }
