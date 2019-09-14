@@ -25,6 +25,8 @@ import com.google.android.gms.samples.vision.ocrreader.ui.camera.GraphicOverlay;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import java.util.List;
 
 /**
@@ -94,6 +96,7 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
     public static boolean isNumeric(String strNum) {
         try {
             double d = Double.parseDouble(strNum);
+
         } catch (NumberFormatException | NullPointerException nfe) {
             return false;
         }
@@ -110,9 +113,9 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
         }
 
         // Draws the bounding box around the TextBlock.
-        RectF rect = new RectF(textBlock.getBoundingBox());
-        rect = translateRect(rect);
-        canvas.drawRect(rect, rectPaint);
+//        RectF rect = new RectF(textBlock.getBoundingBox());
+//        rect = translateRect(rect);
+//        canvas.drawRect(rect, rectPaint);
 
         // Break the text into multiple lines and draw each one according to its own bounding box.
         List<? extends Text> textComponents = textBlock.getComponents();
@@ -120,7 +123,7 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
             float left = translateX(currentText.getBoundingBox().left);
             float bottom = translateY(currentText.getBoundingBox().bottom);
             Log.i(TAG, "draw: " + isNumeric(currentText.getValue()));
-            if (isNumeric(currentText.getValue())){
+            if (NumberUtils.isCreatable(currentText.getValue())){
                 Log.i(TAG, "Huyu: " + currentText.getValue());
                 canvas.drawText(currentText.getValue(), left, bottom, textPaint);
             } else {
