@@ -124,16 +124,43 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
             float bottom = translateY(currentText.getBoundingBox().bottom);
 
             Log.i(TAG, "draw: " + isNumeric(currentText.getValue()));
-            if (!isNumeric(currentText.getValue()) && isNumeric(currentText.getValue().substring(1))) {
-                Log.i(TAG, "Huyu: " + currentText.getValue().substring(1));
-                canvas.drawText(currentText.getValue().substring(1), left, bottom, textPaint);
-            } else if (NumberUtils.isCreatable(currentText.getValue())){
+            if (!isNumeric(currentText.getValue()) && isNumeric(keepNumbers(currentText.getValue()))) {
+                Log.i(TAG, "Huyu: " + keepNumbers(currentText.getValue().substring(1)));
+                canvas.drawText(keepNumbers(currentText.getValue()), left, bottom, textPaint);
+            }
+            else if (NumberUtils.isCreatable(currentText.getValue())) {
                 Log.i(TAG, "Huyu: " + currentText.getValue());
                 canvas.drawText(currentText.getValue(), left, bottom, textPaint);
-            } else {
+            }
+            else {
                 Log.i(TAG, "Not Huyu: " + currentText.getValue());
             }
 
         }
+    }
+
+    private String keepNumbers(String x)
+    {
+        boolean found = false;
+        boolean stringFound = false;
+        boolean stillOk = true;
+
+        String res = "";
+        for (int i = 0; i < x.length(); i++) {
+            if (x.charAt(i) >= '0' && x.charAt(i) <= '9' || x.charAt(i) == '.' || x.charAt(i) == ',') {
+                res += x.charAt(i);
+                found = true;
+
+                if (stringFound) stillOk = false;
+            }
+            else if (found) {
+                stringFound = true;
+            }
+
+        }
+
+        if (res.length() == 0 || res.length() > 5 || !stillOk) res = "fail";
+
+        return res;
     }
 }
