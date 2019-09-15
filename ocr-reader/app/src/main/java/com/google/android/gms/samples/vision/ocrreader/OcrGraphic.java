@@ -122,8 +122,12 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
         for(Text currentText : textComponents) {
             float left = translateX(currentText.getBoundingBox().left);
             float bottom = translateY(currentText.getBoundingBox().bottom);
+
             Log.i(TAG, "draw: " + isNumeric(currentText.getValue()));
-            if (NumberUtils.isCreatable(currentText.getValue())){
+            if (!isNumeric(currentText.getValue()) && isNumeric(currentText.getValue().substring(1))) {
+                Log.i(TAG, "Huyu: " + currentText.getValue().substring(1));
+                canvas.drawText(currentText.getValue().substring(1), left, bottom, textPaint);
+            } else if (NumberUtils.isCreatable(currentText.getValue())){
                 Log.i(TAG, "Huyu: " + currentText.getValue());
                 canvas.drawText(currentText.getValue(), left, bottom, textPaint);
             } else {
