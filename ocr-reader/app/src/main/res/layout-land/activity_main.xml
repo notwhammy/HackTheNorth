@@ -8,26 +8,15 @@
     tools:context="com.google.android.gms.samples.vision.ocrreader.MainActivity">
 
     <TextView
+        android:id="@+id/status_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/ocr_header"
-        android:id="@+id/status_message"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/text_value"
-        android:layout_below="@+id/status_message"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="110dp"
-        android:layout_alignRight="@+id/status_message"
-        android:layout_alignEnd="@+id/status_message" />
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:text="Welcome. Please select the conversion below."
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
         android:layout_width="wrap_content"
@@ -38,24 +27,66 @@
         android:layout_centerHorizontal="true" />
 
     <CheckBox
-        android:layout_width="wrap_content"
+        android:id="@+id/use_flash"
+        android:layout_width="104dp"
         android:layout_height="wrap_content"
-        android:text="@string/auto_focus"
-        android:id="@+id/auto_focus"
-        android:layout_above="@+id/read_text"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="77dp"
-        android:checked="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginRight="277dp"
+        android:layout_marginBottom="224dp"
+        android:checked="false"
+        android:text="@string/use_flash" />
 
     <CheckBox
+        android:id="@+id/auto_focus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/use_flash"
-        android:id="@+id/use_flash"
-        android:layout_alignTop="@+id/auto_focus"
-        android:layout_alignRight="@+id/text_value"
-        android:layout_alignEnd="@+id/text_value"
-        android:checked="false" />
+        android:layout_below="@+id/text_value"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="275dp"
+        android:layout_marginBottom="255dp"
+        android:checked="true"
+        android:text="@string/auto_focus" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="128dp"
+        android:layout_height="62dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginBottom="518dp"
+        android:background="#123456"/>
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="128dp"
+        android:layout_height="62dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="220dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="516dp"
+        android:background="#123456" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="374dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="37dp"
+        android:layout_marginBottom="586dp"
+        android:text="               From
+                                               To" />
 
 </RelativeLayout>

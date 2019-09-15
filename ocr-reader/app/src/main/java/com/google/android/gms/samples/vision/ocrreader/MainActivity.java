@@ -21,7 +21,10 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -37,6 +40,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private CompoundButton useFlash;
     private TextView statusMessage;
     private TextView textValue;
+    private String firstCurrency;
+    private String secondCurrency;
+    private Spinner mySpinner;
+    private Spinner mySpinner2;
 
     private static final int RC_OCR_CAPTURE = 9003;
     private static final String TAG = "MainActivity";
@@ -48,6 +55,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         statusMessage = (TextView)findViewById(R.id.status_message);
         textValue = (TextView)findViewById(R.id.text_value);
+
+        mySpinner = (Spinner) findViewById(R.id.spinner1);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.Currency));
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mySpinner.setAdapter(myAdapter);
+
+        mySpinner2 = (Spinner) findViewById(R.id.spinner2);
+        ArrayAdapter<String> myAdapter2 = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.Currency));
+        myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mySpinner2.setAdapter(myAdapter2);
+
+        secondCurrency = mySpinner2.getSelectedItem().toString();
+        Log.i(TAG, "onCreate: Second Cur = " + secondCurrency);
 
         autoFocus = (CompoundButton) findViewById(R.id.auto_focus);
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
@@ -68,7 +92,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
             intent.putExtra(OcrCaptureActivity.AutoFocus, autoFocus.isChecked());
             intent.putExtra(OcrCaptureActivity.UseFlash, useFlash.isChecked());
 
+            Intent intentOCRGraphic = new Intent(this, OcrGraphic.class);
+
+            firstCurrency = mySpinner.getSelectedItem().toString();
+            secondCurrency = mySpinner2.getSelectedItem().toString();
+            ffCurrency = firstCurrency;
+            ssCurrency = secondCurrency;
+
+           // intentOCRGraphic.putExtra(OcrGraphic.FirstCurrency, firstCurrency);
+            //intentOCRGraphic.putExtra(OcrGraphic.SecondCurrency, secondCurrency);
+
+//            Log.i(TAG, "First Currency: " + firstCurrency);
+//            Log.i(TAG, "Second Currency: " + secondCurrency);
+
             startActivityForResult(intent, RC_OCR_CAPTURE);
+           // startActivity(intentOCRGraphic);
         }
     }
 
@@ -115,5 +153,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    static public String ffCurrency, ssCurrency;
+    static public String getFirstCurrency() {
+        return ffCurrency;
+    }
+
+    static public String getSecondCurrency() {
+        return ssCurrency;
     }
 }
